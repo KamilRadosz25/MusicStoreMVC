@@ -13,9 +13,9 @@ namespace MvcMusicStore.Controllers
             _logger = logger;
         }
 
-        public string Index()
+        public ActionResult Index()
         {
-            return "Hello from home";
+            return View();
         }
 
         public IActionResult Privacy()

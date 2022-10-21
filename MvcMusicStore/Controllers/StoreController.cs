@@ -1,24 +1,34 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MvcMusicStore.Models;
 using System.Web;
 
 namespace MvcMusicStore.Controllers
 {
     public class StoreController : Controller
     {
-        public string Index()
+        public ActionResult Index()
         {
-            return "Hello from Store.Index()";
-        }
-        public string Browse(string genre)
-        {
-            string message = HttpUtility.HtmlEncode("Store.Browsze, Genre = " + genre);
+            var genres = new List<Genre>
+            {
+                new Genre { Name = "Disco"},
+                new Genre { Name = "Jazz"},
+                new Genre { Name = "Rock"},
+            };
 
-            return message;
+            return View(genres);
         }
-        public string Details(int id)
+        public ActionResult Browse(string genre)
         {
-            string message = "Store.Details, ID = " + id;
-            return message;
+            var genreModel = new Genre { Name = genre };
+
+            return View(genreModel);
+        }
+
+        public ActionResult Details(int id)
+        {
+            var album = new Album{ Title = "Album " + id };
+
+            return View(album);   
         }
 
     }
