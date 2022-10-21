@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Web;
 
 namespace MvcMusicStore.Controllers
 {
@@ -8,13 +9,16 @@ namespace MvcMusicStore.Controllers
         {
             return "Hello from Store.Index()";
         }
-        public string Browse()
+        public string Browse(string genre)
         {
-            return "Hello From Store.Browse()";
+            string message = HttpUtility.HtmlEncode("Store.Browsze, Genre = " + genre);
+
+            return message;
         }
-        public string Details()
+        public string Details(int id)
         {
-            return "Hello from Store.Details()";
+            string message = "Store.Details, ID = " + id;
+            return message;
         }
 
     }
