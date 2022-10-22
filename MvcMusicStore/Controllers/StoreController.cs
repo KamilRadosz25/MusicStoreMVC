@@ -29,7 +29,7 @@ namespace MvcMusicStore.Controllers
 
         public ActionResult Details(int id)
         {
-            var album = new Album{ Title = "Album " + id };
+            var album = _dbContext.Albums.Find(id);
 
             return View(album);   
         }
