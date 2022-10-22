@@ -1,17 +1,30 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore;
+using MvcMusicStore.Models;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("Default");
+
+
+// Configure Services
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<MusicStoreEntities>(x => x.UseSqlServer(connectionString));
+builder.Services.AddScoped<SampleData>();
 
 var app = builder.Build();
+using var scope = app.Services.CreateScope();
 
-// Configure the HTTP request pipeline.
+var seeder = scope.ServiceProvider.GetRequiredService<SampleData>();
+
+seeder.Seed();
+
+// Configure
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

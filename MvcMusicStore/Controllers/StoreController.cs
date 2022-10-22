@@ -6,15 +6,16 @@ namespace MvcMusicStore.Controllers
 {
     public class StoreController : Controller
     {
+        private readonly MusicStoreEntities _dbContext;
+
+        public StoreController(MusicStoreEntities dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public ActionResult Index()
         {
-            var genres = new List<Genre>
-            {
-                new Genre { Name = "Disco"},
-                new Genre { Name = "Jazz"},
-                new Genre { Name = "Rock"},
-            };
-
+            var genres = _dbContext.Genres.ToList();
             return View(genres);
         }
         public ActionResult Browse(string genre)
