@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MvcMusicStore.Models;
 using System.Web;
 
@@ -20,7 +21,8 @@ namespace MvcMusicStore.Controllers
         }
         public ActionResult Browse(string genre)
         {
-            var genreModel = new Genre { Name = genre };
+            var genreModel = _dbContext.Genres.Include("Albums")
+            .Single(g => g.Name == genre);
 
             return View(genreModel);
         }

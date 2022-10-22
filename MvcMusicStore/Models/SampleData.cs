@@ -15,35 +15,13 @@ namespace MvcMusicStore.Models
         }
         public void Seed()
         {
-
-            if (_dbContext.Database.CanConnect())
+            if(_dbContext.Genres.Any())
             {
-                if (!_dbContext.Genres.Any())
-                {
-                    var genres = GetGenres();
-                    _dbContext.Genres.AddRange(genres);
-                    _dbContext.SaveChanges();
-                }
-                if(!_dbContext.Artists.Any())
-                {
-                    var artists = GetArtists();
-                    _dbContext.Artists.AddRange(artists);
-                    _dbContext.SaveChanges();
-                }
-                if (!_dbContext.Albums.Any())
-                {
-                    var albums = GetAlbums();
-                    _dbContext.Albums.AddRange(albums);
-                    _dbContext.SaveChanges();
-                }
+                return;
             }
 
-        }
-
-            private IEnumerable<Genre> GetGenres()
+            var genres = new List<Genre>
             {
-                var genres = new List<Genre>
-                {
                 new Genre { Name = "Rock" },
                 new Genre { Name = "Jazz" },
                 new Genre { Name = "Metal" },
@@ -54,13 +32,7 @@ namespace MvcMusicStore.Models
                 new Genre { Name = "Reggae" },
                 new Genre { Name = "Pop" },
                 new Genre { Name = "Classical" }
-                };
-
-                return genres;
-            }
-
-        private IEnumerable<Artist> GetArtists()
-        {
+            };
 
             var artists = new List<Artist>
             {
@@ -214,14 +186,9 @@ namespace MvcMusicStore.Models
                 new Artist { Name = "Yo-Yo Ma" },
                 new Artist { Name = "Zeca Pagodinho" }
             };
-            return artists;
-        }
 
-        private IEnumerable<Album> GetAlbums()
-        {
-            var genres = GetGenres();
-            var artists = GetArtists();
-            var albums = new List<Album>{
+            new List<Album>
+            {
                 new Album { Title = "A Copland Celebration, Vol. I", Genre = genres.Single(g => g.Name == "Classical"), Price = 8.99M, Artist = artists.Single(a => a.Name == "Aaron Copland & London Symphony Orchestra"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
                 new Album { Title = "Worlds", Genre = genres.Single(g => g.Name == "Jazz"), Price = 8.99M, Artist = artists.Single(a => a.Name == "Aaron Goldberg"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
                 new Album { Title = "For Those About To Rock We Salute You", Genre = genres.Single(g => g.Name == "Rock"), Price = 8.99M, Artist = artists.Single(a => a.Name == "AC/DC"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
@@ -468,9 +435,9 @@ namespace MvcMusicStore.Models
                 new Album { Title = "Bartok: Violin & Viola Concertos", Genre = genres.Single(g => g.Name == "Classical"), Price = 8.99M, Artist = artists.Single(a => a.Name == "Yehudi Menuhin"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
                 new Album { Title = "Bach: The Cello Suites", Genre = genres.Single(g => g.Name == "Classical"), Price = 8.99M, Artist = artists.Single(a => a.Name == "Yo-Yo Ma"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
                 new Album { Title = "Ao Vivo [IMPORT]", Genre = genres.Single(g => g.Name == "Latin"), Price = 8.99M, Artist = artists.Single(a => a.Name == "Zeca Pagodinho"), AlbumArtUrl = "/Content/Images/placeholder.gif" },
-            };
-            return albums;
+            }.ForEach(a => _dbContext.Albums.Add(a));
 
+            _dbContext.SaveChanges();
         }
     }
 }
