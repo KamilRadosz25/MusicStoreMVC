@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MvcMusicStore.Models.Album>
+
+@functions{
+    string truncate(string input, int length)
+    {
+        if (input.Length <= length)
+        {
+            return input;
+        } else
+        {
+            return input.Substring(0,length)+"...";
+        }
+
+    }
+
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+              @truncate(item.Genre.Name,20)
+            </td>
+            <td>
+                @truncate(item.Artist.Name,20)
+            </td>
+            <td>
+                @truncate(item.Title,20)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AlbumId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AlbumId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AlbumId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

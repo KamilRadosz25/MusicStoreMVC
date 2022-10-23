@@ -23,6 +23,7 @@ namespace MvcMusicStore.Models
                 .Property(x => x.Description)
                 .IsRequired(false);
 
+
         }
 
 

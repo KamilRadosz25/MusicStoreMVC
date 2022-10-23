@@ -11,7 +11,7 @@ using MvcMusicStore.Models;
 namespace MvcMusicStore.Migrations
 {
     [DbContext(typeof(MusicStoreEntities))]
-    [Migration("20221022151053_Init")]
+    [Migration("20221023162938_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
